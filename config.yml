@@ -1,5 +1,5 @@
 recipe: default.v1
-language: ru
+language: en
 pipeline:
 - name: SingleStepLLMCommandGenerator
   llm:
