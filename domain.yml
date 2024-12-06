@@ -1,0 +1,151 @@
+version: "3.1"
+
+intents:
+  - start
+  - get_documents
+  - setup_company
+  - get_taxation
+  - help
+  - visa
+  - police_cert
+  - translation_docs
+  - another_question
+
+
+slots:
+  recipient:
+    type: text
+    mappings:
+      - type: from_llm
+  amount:
+    type: float
+    mappings:
+      - type: from_llm
+  language:
+    type: text
+    mappings:
+      - type: from_llm
+
+
+responses:
+  utter_ask_recipient:
+    - text: "Who would you like to send money to?"
+
+  utter_ask_amount:
+    - text: "How much money would you like to send?"
+
+  utter_transfer_complete:
+    - text: "All done. {amount} has been sent to {recipient}."
+
+  utter_ask_language:
+    - text: "In what language would you like to conduct the dialogue?"
+
+  utter_language_selected:
+    - text: "Choosed {language}"
+
+  utter_language_cancelled:
+    - text: "nu i powel naxui"
+
+  utter_hello:
+    - text: "Hi there! 👋Here you can find a selection of important information for a comfortable start to life in Cyprus!"
+
+  utter_main:
+    - text: "Write your question or choose one of the sections."
+      buttons:
+        - title: "Documents"
+          payload: /get_documents
+        - title: "Set up your company"
+          payload: /setup_company
+        - title: "Taxation"
+          payload: /get_taxation
+    - text: "Choose one of the buttons or ask your question."
+      buttons:
+        - title: "Documents"
+          payload: /get_documents
+        - title: "Set up your company"
+          payload: /setup_company
+        - title: "Taxation"
+          payload: /get_taxation
+    - text: "Click on the appropriate section or write a question."
+      buttons:
+        - title: "Documents"
+          payload: /get_documents
+        - title: "Set up your company"
+          payload: /setup_company
+        - title: "Taxation"
+          payload: /get_taxation
+
+  utter_can_do_something_else:
+    - text: ""
+
+  utter_thanks:
+    - text: "You are welcome!🍀"
+    - text: "Get in touch!🍀"
+
+  utter_gratitude:
+    - text: "I'm always here if you want to know anything else. 🙌🏼"
+    - text: "I'm here if you want to read more information. 👍🏼"
+
+  utter_greet:
+    - text: "Hello! 👋🏼"
+
+  utter_helper:
+    - text: "I can provide you with useful information for life in Cyprus! ☀️ Choose one of the sections to get started or write your own question:" # need link to main
+
+  utter_no_match:
+    - text: "Unfortunately, I wasn't unable to understand your request. Try to phrase it differently."
+    - text: "I didn't quite understand your request. Write it differently, please." # link to main
+
+  utter_internal_error_response:
+    - text: "There was an internal error. Please, try again later."
+
+  utter_documents_info:
+    - text: "For relocation to Cyprus, you need to collect a package of documents. The list of documents depends on the type of residence permit you need. There is a summary and links to useful resources."
+
+  utter_documents_buttons:
+    - text: "Click the button and find out more:"
+      buttons:
+        - title: "Visas for entry"
+          payload: /visa
+        - title: "Police clearance certificate"
+          payload: /police_cert
+        - title: "Translation of documents"
+          payload: /translation_docs
+        - title: "Another question"
+          payload: /another_question
+    - text: "To read the information, click on one of the buttons:"
+      buttons:
+        - title: "Visas for entry"
+          payload: /visa
+        - title: "Police clearance certificate"
+          payload: /police_cert
+        - title: "Translation of documents"
+          payload: /translation_docs
+        - title: "Another question"
+          payload: /another_question
+    - text: "Select the button and find out the details:"
+      buttons:
+        - title: "Visas for entry"
+          payload: /visa
+        - title: "Police clearance certificate"
+          payload: /police_cert
+        - title: "Translation of documents"
+          payload: /translation_docs
+        - title: "Another question"
+          payload: /another_question
+
+  utter_visa_info:
+    - text: "Citizens of EU countries and holders of residence permits of these countries don't need a visa to enter Cyprus. Third-country nationals can enter Cyprus with a Schengen visa or with a Cypriot national visa. To find complete information about visas and rules for staying in Cyprus, you can check the website of the Migration Department: http://www.moi.gov.cy/moi/crmd/crmd.nsf/home_en/home_en?openform#"
+    # сюда добавить 2 кнопки назад и спасибо
+
+  utter_police_clearance:
+    - text: "⚖️ Police clearance certificate in Cyprus Having lived in Cyprus for six months or more, you can get a Cypriot certificate of good conduct. The certificate is issued at the main police station in Nicosia on weekdays until 15:00. To receive a certificate, you must fill out and sign an application. Download form 📍 Address: Cyprus Police Headquarters Nicosia 1478, Cyprus Phone: +357 (22) 808944   http://www.police.gov.cy ❗You need to have copies and originals of your passport and PinkSlip with you."
+    # сюда добавить 2 кнопки назад и спасибо
+
+  utter_doc_translation:
+    - text: "💬 If you need to translate documents, you can find a certified translator in the registry: https://www.pio.gov.cy/en/register-of-sworn-translators.html"
+    # сюда добавить 2 кнопки назад и спасибо
+
+  utter_another_question:
+    - text: "What do you want to know?What do you want to know?"
+    # link на main
