@@ -1,0 +1,127 @@
+flows:
+  transfer_money:
+    description: This flow lets users send money to friends and family.
+    steps:
+      - collect: recipient
+      - collect: amount
+        description: the number of US dollars to send
+      - action: utter_transfer_complete
+        next: END
+
+  choose_language:
+    description: This flow lets users to choose the language to communicate in.
+    steps:
+      - collect: language
+        description: selected language by user (Russian or English)
+        next: 
+          - if: not slots.language
+            then: 
+              - action: utter_language_cancelled
+                next: END
+          - else: language_successful
+      - action: utter_language_selected
+        id: language_successful
+        next: END
+
+  start_chat:
+    description: This flow starts a chat when the user types /start
+    steps:
+      - action: utter_hello
+      - link: "main_window"
+        # next: END
+
+  main_window:
+    description: This flow allows the user to choose the next flow.
+    steps:
+      - action: "utter_main"
+        next: END
+
+  documents:
+    name: "A flow to get info about required documents"
+    description: "This flow allows the user to learn about the required set of documents for relocation."
+    nlu_trigger:
+      - intent: "get_documents"
+    steps:
+      - action: "utter_documents_info"
+      - link: "documents_buttons" # temp link to main
+        # next: END
+
+  documents_buttons:
+    name: "4 buttons for docs"
+    description: "This flow allows the user to call up buttons with information about documents for moving to Cyprus"
+    steps:
+      - action: "utter_documents_buttons"
+
+  documents_visa:
+    name: "visa info"
+    description: "This flow allows the user to obtain information about the visa for entry to Cyprus"
+    nlu_trigger:
+      - intent: "visa"
+    steps:
+      - action: "utter_visa_info"
+
+  documents_police_clearence:
+    name: "police info"
+    description: "This flow allows the user to get information about obtaining a certificate of police clearance"
+    nlu_trigger:
+      - intent: "police_cert"
+    steps:
+      - action: "utter_police_clearance"
+
+  documents_doc_translation:
+    name: "doc translation"
+    description: "This flow allows the user to get information about the translation of their documents for entry into Cyprus"
+    nlu_trigger:
+      - intent: "translation_docs"
+    steps:
+      - action: "utter_doc_translation"
+
+  documents_another_question:
+    name: "another question by user"
+    description: "This flow allows the user to get an answer to another question and return to the main menu."
+    nlu_trigger:
+      - intent: "another_question"
+    steps:
+      - action: "utter_another_question"
+  
+  
+  setup_company_flow:
+    name: "setup company flow"
+    description: "This flow allows the user to find out how to open or setup a company in Cyprus, what is needed for this, etc."
+    nlu_trigger:
+      - intent: "setup_company"
+    steps:
+      - link: "main_window" # temp link to main
+        # next: END
+
+  taxation:
+    name: "Tax information"
+    description: "This flow allows the user to learn about taxes and expenses when relocating to Cyprus"
+    nlu_trigger:
+      - intent: "get_taxation"
+    steps:
+      - link: "main_window" # temp link to main
+        # next: END
+
+  greeting:
+    name: "answer to greeting by user"
+    description: "This flow responds to all user greetings."
+    steps:
+      - action: "utter_greet"
+      - link: "main_window"
+
+  helper:
+    name: "Answer what bot can do"
+    description: "This flow answers user questions about the bot's functions. For example, the question: What can you do?"
+    nlu_trigger:
+      - intent: "help"
+    steps:
+      - action: "utter_helper"
+      - link: "main_window"
+
+  gratitude:
+    name: "express gratitude"
+    description: "This flow responds to all types of gratitude from the user."
+    steps:
+      - action: "utter_gratitude"
+      - link: "main_window"
