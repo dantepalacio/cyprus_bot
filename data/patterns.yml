@@ -18,6 +18,7 @@ flows:
     steps:
       - action: utter_no_match
       - link: "main_window"
+      
 #   pattern_chitchat:
 #     description: Conversation repair flow for off-topic interactions that won't disrupt the main conversation. should not respond to greetings, choose language or anything else for which there is a flow defined
 #     name: pattern chitchat
