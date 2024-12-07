@@ -1,13 +1,4 @@
 flows:
-  transfer_money:
-    description: This flow lets users send money to friends and family.
-    steps:
-      - collect: recipient
-      - collect: amount
-        description: the number of US dollars to send
-      - action: utter_transfer_complete
-        next: END
-
   choose_language:
     description: This flow lets users to choose the language to communicate in.
     steps:
@@ -31,10 +22,10 @@ flows:
         # next: END
 
   main_window:
-    description: This flow allows the user to choose the next flow.
+    description: This is a main flow, that allows the user to choose the next flow.
     steps:
       - action: "utter_main"
-        next: END
+
 
   documents:
     name: "A flow to get info about required documents"
@@ -83,7 +74,7 @@ flows:
       - intent: "another_question"
     steps:
       - action: "utter_another_question"
-  
+      - link: "main_window"
   
   setup_company_flow:
     name: "setup company flow"
@@ -91,8 +82,7 @@ flows:
     nlu_trigger:
       - intent: "setup_company"
     steps:
-      - link: "main_window" # temp link to main
-        # next: END
+      - action: "utter_setup_company"
 
   taxation:
     name: "Tax information"
@@ -100,8 +90,8 @@ flows:
     nlu_trigger:
       - intent: "get_taxation"
     steps:
-      - link: "main_window" # temp link to main
-        # next: END
+      - action: "utter_taxation"
+
 
   greeting:
     name: "answer to greeting by user"
@@ -123,5 +113,87 @@ flows:
     name: "express gratitude"
     description: "This flow responds to all types of gratitude from the user."
     steps:
+      - action: "utter_thanks"
       - action: "utter_gratitude"
       - link: "main_window"
+
+  back_to_docs:
+    description: "This flow returns the user to the flow with documents"
+    nlu_trigger:
+      - intent: "back_to_docs"
+    steps:
+      - link: "documents"
+
+  thanks_docs:
+    description: "This flow asks the user if they need anything else."
+    nlu_trigger:
+      - intent: "thanks_docs"
+    steps:
+      - action: "utter_thanks_docs"
+      - link: "main_window"
+
+# --------- topic answers ---------
+  types_of_companies:
+    description: "This flow allows the user to learn about the types of companies"
+    nlu_trigger:
+      - intent: "types_of_companies"
+    steps:
+      - action: "action_companies_type_set_slot" # Custom action here
+      - action: "utter_your_topic"
+      - link: "main_window"
+       
+
+  register_company:
+    description: "This flow allows the user to learn how to register a company"
+    nlu_trigger:
+      - intent: "how_to_register_company"
+    steps:
+      - action: "action_register_company_set_slot" # custom action here
+      - action: "utter_your_topic"
+      - link: "main_window"
+
+  obligations_payments:
+    description: "This flow allows you to learn about obligations and payments"
+    nlu_trigger:
+      - intent: "payments"
+    steps:
+      - action: "action_obligations_set_slot" # custom action here
+      - action: "utter_your_topic"
+      - link: "main_window"
+
+  tax_resident:
+    description: "This flow allows you to learn how to become a tax resident"
+    nlu_trigger:
+      - intent: "become_tax_resident"
+    steps:
+      - action: "action_become_resident_set_slot" # custom action here
+      - action: "utter_your_topic"
+      - link: "main_window"
+
+  tax_calculator:
+    description: "This flow gives access to a tax calculator"
+    nlu_trigger:
+      - intent: "tax_calculator"
+    steps:
+      - action: "action_tax_calculator_set_slot" # custom action here
+      - action: "utter_your_topic"
+      - link: "main_window"
+
+  individual_taxation:
+    description: "This flow allows you to learn about individual taxes"
+    nlu_trigger:
+      - intent: "individual_taxation"
+    steps:
+      - action: "action_individual_taxation_set_slot" # custom action here
+      - action: "utter_your_topic"
+      - link: "main_window"
+# --------- topic answers ---------
+
+# --------- rag ---------
+
+  pattern_search:
+    description: "handle a knowledge-based question or request. main topics from the knowledge base: Rental property in Cyprus, Rental tips, Banks in Cyprus, Water supply in Cyprus, Transfer bills, JCC, Garbage sorting, Emergency number. React to them."
+    name: "pattern search"
+    steps:
+      - action: "action_trigger_search"
+# --------- rag ---------
