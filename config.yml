@@ -3,11 +3,31 @@ language: en
 pipeline:
 - name: SingleStepLLMCommandGenerator
   llm:
-    model: gpt-4o-mini
+    provider: "openai"
+    model: "gpt-4o-mini"
+  flow_retrieval:
+    embeddings:
+      provider: "openai"
+      model: "text-embedding-3-large"
+  
+
 
 policies:
 - name: FlowPolicy
-#  - name: EnterpriseSearchPolicy
+  priority: 1
+- name: EnterpriseSearchPolicy
+  vector_store:
+    type: "faiss"
+    source: "./docs"
+  llm:
+    type: "openai"
+    model: "gpt-4o-mini"
+  embeddings:
+    type: "openai"
+    model: "text-embedding-3-large"
+  max_history: 5
+  priority: 0
+  
 #  - name: RulePolicy
 assistant_id: 20241206-002628-swift-glide
 # policies:
