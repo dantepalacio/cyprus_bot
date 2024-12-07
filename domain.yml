@@ -10,33 +10,29 @@ intents:
   - police_cert
   - translation_docs
   - another_question
+  - back_to_docs
+  - thanks_docs
+  - types_of_companies
+  - how_to_register_company
+  - payments
+  - become_tax_resident
+  - tax_calculator
+  - individual_taxation
 
 
 slots:
-  recipient:
-    type: text
-    mappings:
-      - type: from_llm
-  amount:
-    type: float
-    mappings:
-      - type: from_llm
   language:
-    type: text
+    type: text # categorical -> values: через тире категории(russian, english)
     mappings:
       - type: from_llm
+
+  result:
+    type: text
+
+  
 
 
 responses:
-  utter_ask_recipient:
-    - text: "Who would you like to send money to?"
-
-  utter_ask_amount:
-    - text: "How much money would you like to send?"
-
-  utter_transfer_complete:
-    - text: "All done. {amount} has been sent to {recipient}."
-
   utter_ask_language:
     - text: "In what language would you like to conduct the dialogue?"
 
@@ -44,7 +40,7 @@ responses:
     - text: "Choosed {language}"
 
   utter_language_cancelled:
-    - text: "nu i powel naxui"
+    - text: "cancelled"
 
   utter_hello:
     - text: "Hi there! 👋Here you can find a selection of important information for a comfortable start to life in Cyprus!"
@@ -136,16 +132,69 @@ responses:
 
   utter_visa_info:
     - text: "Citizens of EU countries and holders of residence permits of these countries don't need a visa to enter Cyprus. Third-country nationals can enter Cyprus with a Schengen visa or with a Cypriot national visa. To find complete information about visas and rules for staying in Cyprus, you can check the website of the Migration Department: http://www.moi.gov.cy/moi/crmd/crmd.nsf/home_en/home_en?openform#"
-    # сюда добавить 2 кнопки назад и спасибо
+      buttons:
+        - title: "Back"
+          payload: "/back_to_docs" # link to documents_buttons flow
+        - title: "Thanks"
+          payload: "/thanks_docs"
+
 
   utter_police_clearance:
     - text: "⚖️ Police clearance certificate in Cyprus Having lived in Cyprus for six months or more, you can get a Cypriot certificate of good conduct. The certificate is issued at the main police station in Nicosia on weekdays until 15:00. To receive a certificate, you must fill out and sign an application. Download form 📍 Address: Cyprus Police Headquarters Nicosia 1478, Cyprus Phone: +357 (22) 808944   http://www.police.gov.cy ❗You need to have copies and originals of your passport and PinkSlip with you."
-    # сюда добавить 2 кнопки назад и спасибо
+      buttons:
+        - title: "Back"
+          payload: "/back_to_docs" # link to documents_buttons flow
+        - title: "Thanks"
+          payload: "/thanks_docs" 
 
   utter_doc_translation:
     - text: "💬 If you need to translate documents, you can find a certified translator in the registry: https://www.pio.gov.cy/en/register-of-sworn-translators.html"
-    # сюда добавить 2 кнопки назад и спасибо
+      buttons:
+        - title: "Back"
+          payload: "/back_to_docs" # link to documents_buttons flow
+        - title: "Thanks"
+          payload: "/thanks_docs" 
 
   utter_another_question:
-    - text: "What do you want to know?What do you want to know?"
-    # link на main
+    - text: "What do you want to know?"
+
+  utter_thanks_docs:
+    - text: "Do you want to know something else?"
+    - text: "Curious to know anything else?"
+    - text: "Do you have more questions?"
+
+  utter_setup_company:
+    - text: "Here you can find basic information on starting your company in Cyprus."
+      buttons:
+        - title: "Main types of companies"
+          payload: "/types_of_companies"
+        - title: "How to register a company in Cyprus"
+          payload: "/how_to_register_company" 
+        - title: "Obligations and payments(Fees)"
+          payload: "/payments" 
+        - title: "Another question"
+          payload: "/another_question" 
+
+  utter_your_topic:
+    - text: "Your topic: {result}" 
+
+  utter_taxation:
+    - text: "Understanding taxes is very important when you arrive in a new country. Here is the starting information for you."
+      buttons:
+        - title: "How to become a tax resident in Cyprus"
+          payload: "/become_tax_resident"
+        - title: "Tax Calculator"
+          payload: "/tax_calculator" 
+        - title: "Individual taxation"
+          payload: "/individual_taxation" 
+        - title: "Another question"
+          payload: "/another_question" 
+
+
+actions:
+  - action_companies_type_set_slot
+  - action_register_company_set_slot
+  - action_obligations_set_slot
+  - action_become_resident_set_slot
+  - action_tax_calculator_set_slot
+  - action_individual_taxation_set_slot
