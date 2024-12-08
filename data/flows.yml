@@ -69,7 +69,7 @@ flows:
 
   documents_another_question:
     name: "another question by user"
-    description: "This flow allows the user to get an answer to another question and return to the main menu."
+    description: "This flow allows the user to return to the main menu."
     nlu_trigger:
       - intent: "another_question"
     steps:
@@ -96,6 +96,8 @@ flows:
   greeting:
     name: "answer to greeting by user"
     description: "This flow responds to all user greetings."
+    nlu_trigger:
+      - intent: session_start
     steps:
       - action: "utter_greet"
       - link: "main_window"
@@ -105,6 +107,7 @@ flows:
     description: "This flow answers user questions about the bot's functions. For example, the question: What can you do?"
     nlu_trigger:
       - intent: "help"
+      - intent: "What you can do?"
     steps:
       - action: "utter_helper"
       - link: "main_window"
@@ -196,4 +199,6 @@ flows:
     name: "pattern search"
     steps:
       - action: "action_trigger_search"
+
 # --------- rag ---------
+
