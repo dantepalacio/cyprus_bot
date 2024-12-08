@@ -14,4 +14,6 @@ pip install aiogram==2.25 aiohttp==3.8.5
 
 ### Команда для запуска бота 
 
+ngrok http 5005 --> вставить forwarding url в credentials telegram url
+
 rasa run --enable-api --cors "*" --debug
