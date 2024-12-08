@@ -18,11 +18,12 @@ intents:
   - become_tax_resident
   - tax_calculator
   - individual_taxation
+  - What you can do?
 
 
 slots:
   language:
-    type: text # categorical -> values: через тире категории(russian, english)
+    type: text
     mappings:
       - type: from_llm
 
